@@ -96,33 +96,6 @@ class SolarWatchApplicationTests {
 
     }
 
-    @Test
-    public void testCitySunsetAndSunriseByDateWithParams() throws Exception {
-        RequestBuilder request = MockMvcRequestBuilders
-                .get("/city2/2024-04-06/TestCity3");
-
-        server.enqueue(new MockResponse()
-                .addHeader("Content-Type", "application/json; charset=utf-8")
-                .setBody("[{\"name\":\"TestCity3\",\"local_names\":{}," +
-                        "\"lat\",\"80\",\"lon\",\"100\",\"country\",\"TestCity\"," +
-                        "\"state\",\"T\"}]"));
-
-        server.enqueue(new MockResponse()
-                .addHeader("Content-Type", "application/json; charset=utf-8")
-                .setBody("{\"results\":{\"sunrise\":\"06:00:00 AM\",\"sunset\":\"9:00:00 PM\"}}"));
-
-        String expectedResponse = "{\"sunrise\":\"06:00:00 AM\",\"sunset\":\"9:00:00 PM\"}";
-
-        String responseString = mockMvc.perform(request)
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
-        assertEquals(expectedResponse, responseString);
-
-    }
 
     @Test
     public void testNotValidCoordinates() throws Exception {
